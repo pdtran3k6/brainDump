@@ -8,8 +8,14 @@ import java.awt.Font;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class Layout {
+
+public class Interface {
 
 	private JFrame frame;
 
@@ -20,7 +26,7 @@ public class Layout {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Layout window = new Layout();
+					Interface window = new Interface();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +38,7 @@ public class Layout {
 	/**
 	 * Create the application.
 	 */
-	public Layout() {
+	public Interface() {
 		initialize();
 	}
 
@@ -47,25 +53,42 @@ public class Layout {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnAddToList = new JButton("Add to list");
-		btnAddToList.setBackground(Color.GRAY);
-		btnAddToList.setForeground(Color.BLACK);
-		btnAddToList.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAddToList.setBounds(10, 117, 144, 23);
-		frame.getContentPane().add(btnAddToList);
-		
-		JFormattedTextField textField = new JFormattedTextField();
-		textField.setBounds(10, 69, 384, 37);
-		frame.getContentPane().add(textField);
-		
 		JLabel header = new JLabel("What's on your mind right now? Get it out.");
 		header.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		header.setBounds(10, 31, 414, 37);
 		frame.getContentPane().add(header);
 		
 		JLabel status = new JLabel("");
+		status.setHorizontalAlignment(SwingConstants.CENTER);
 		status.setFont(new Font("Tahoma", Font.BOLD, 14));
 		status.setBounds(10, 176, 414, 37);
 		frame.getContentPane().add(status);
+		
+		JFormattedTextField textField = new JFormattedTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent evt) {
+				if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+					String item = textField.getText();
+					status.setText(item + "... Got it!");
+				}
+			}
+		});
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textField.setBounds(10, 69, 384, 37);
+		frame.getContentPane().add(textField);
+		
+		JButton btnAddToList = new JButton("Add to list");
+		btnAddToList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = textField.getText();
+				status.setText(item + "... Got it!");
+			}
+		});
+		btnAddToList.setBackground(Color.WHITE);
+		btnAddToList.setForeground(Color.BLACK);
+		btnAddToList.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAddToList.setBounds(10, 117, 144, 23);
+		frame.getContentPane().add(btnAddToList);
 	}
 }
