@@ -1,4 +1,4 @@
 # brainDump
-An app that let the users jot down whatever it is on their mind.
+An app that organizes and sorts user's to-do list inspired by David Allen's GTD organizing system.
 
-Updated on May 22, 2016
+Updated on June 13, 2016
